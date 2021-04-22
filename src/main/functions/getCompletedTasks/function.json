@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ],
+      "route": "tasks/completed"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "in",
+      "name": "completedTasks",
+      "databaseName": "todo-cosmos-sql-db",
+      "collectionName": "todo-tasks",
+      "sqlQuery": "SELECT c.id, c.description, c.dueDate FROM c WHERE  c.completedDate != null",
+      "connectionStringSetting": "holitodoappdb_DOCUMENTDB"
+    }
+  ],
+  "scriptFile": "../dist/getCompletedTasks/index.js"
+}

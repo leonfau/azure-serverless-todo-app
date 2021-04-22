@@ -1,0 +1,29 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post"
+      ],
+      "route": "tasks"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "newTask",
+      "databaseName": "todo-cosmos-sql-db",
+      "collectionName": "todo-tasks",
+      "createIfNotExists": "false",
+      "connectionStringSetting": "holitodoappdb_DOCUMENTDB"
+    }
+  ],
+  "scriptFile": "../dist/addTask/index.js"
+}

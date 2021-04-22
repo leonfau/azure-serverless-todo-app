@@ -1,0 +1,38 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "post"
+      ],
+      "route": "tasks/{id}/complete"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "in",
+      "name": "taskToComplete",
+      "databaseName": "todo-cosmos-sql-db",
+      "collectionName": "todo-tasks",
+      "id": "{id}",
+      "connectionStringSetting": "holitodoappdb_DOCUMENTDB"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "completedTask",
+      "databaseName": "todo-cosmos-sql-db",
+      "collectionName": "todo-tasks",
+      "createIfNotExists": "false",
+      "connectionStringSetting": "holitodoappdb_DOCUMENTDB"
+    }
+  ],
+  "scriptFile": "../dist/completeTask/index.js"
+}
