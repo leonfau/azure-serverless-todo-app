@@ -7,10 +7,13 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         ...taskToComplete,
         "completedDate": new Date()
     }
-    
+
     context.bindings.completedTask = updatedTask
     context.res = {
-        body: updatedTask
+        status: 303,
+        headers: {
+          Location: "/api/tasks"
+        }
     };
 
 };

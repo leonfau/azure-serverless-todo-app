@@ -14,6 +14,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         context.bindings.newTask = JSON.stringify(task);
         context.res = {
             status: 201,
+            headers: {
+              Location: "/api/tasks"
+            },
             body: task
         };
     }
