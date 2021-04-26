@@ -5,7 +5,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         status: 400
     };
 
-    if (req?.body?.description) {
+    if (req.body?.description) {
         const task = {
             id: new Date().toISOString() + Math.random().toString().substr(2,8),
             description: req?.body?.description,
@@ -15,7 +15,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         context.res = {
             status: 201,
             headers: {
-              Location: "/api/tasks"
+              Location: "/api/v1/tasks"
             },
             body: task
         };

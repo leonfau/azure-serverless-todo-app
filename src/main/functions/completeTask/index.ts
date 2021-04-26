@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     context.res = {
         status: 303,
         headers: {
-          Location: "/api/tasks"
+          Location: "/api/v1/tasks"
         }
     };
 
