@@ -62,6 +62,11 @@ resource "azurerm_storage_account" "storage-account" {
   account_kind             = "StorageV2"
   min_tls_version          = "TLS1_2"
 
+  static_website {
+    index_document = "index.html"
+    error_404_document = "404.html"
+  }
+
   tags = {
     owner = "leon"
   }
@@ -103,6 +108,7 @@ resource "azurerm_function_app" "function-app" {
 
   app_settings = {
     holitodoappdb_DOCUMENTDB = azurerm_cosmosdb_account.db-account.connection_strings[0]
+    "STATIC_WEBSITE_URL" = azurerm_storage_account.storage-account.primary_web_host,
   }
 
   tags = {
