@@ -1,23 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
   "proxies": {
-    "root": {
-      "matchCondition": {
-        "methods": [ "GET", "HEAD" ],
-        "route": "/"
-      },
-      "backendUri": "https://%STATIC_WEBSITE_URL%/",
-    },
-    "next_files": {
-      "matchCondition": {
-        "methods": [ "GET", "HEAD" ],
-        "route": "/_next/{*restOfPath}"
-      },
-      "backendUri": "https://%STATIC_WEBSITE_URL%/_next/{restOfPath}",
-      "responseOverrides": {
-        "response.headers.Cache-Control": "max-age=533280"
-      }
-    },
     "routes": {
       "matchCondition": {
         "methods": [ "GET", "HEAD" ],
@@ -31,6 +14,16 @@
         "route": "/api/{*restOfPath}"
       },
       "backendUri": "https://localhost/api/{restOfPath}"
+    },
+    "next_files": {
+      "matchCondition": {
+        "methods": [ "GET", "HEAD" ],
+        "route": "/_next/{*restOfPath}"
+      },
+      "backendUri": "https://%STATIC_WEBSITE_URL%/_next/{restOfPath}",
+      "responseOverrides": {
+        "response.headers.Cache-Control": "max-age=533280"
+      }
     }
   }
 }
