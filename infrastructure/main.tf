@@ -72,6 +72,42 @@ resource "azurerm_storage_account" "storage-account" {
   }
 }
 
+resource "azurerm_signalr_service" "signalr" {
+  name = "holi-todo"
+  location = var.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  sku {
+    name = "Free_F1"
+    capacity = 1
+  }
+
+  features {
+    flag = "ServiceMode"
+    value = "Serverless"
+  }
+
+  features {
+    flag = "EnableConnectivityLogs"
+    value = "False"
+  }
+
+  features {
+    flag = "EnableMessagingLogs"
+    value = "False"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      features
+    ]
+  }
+
+  tags = {
+    owner = "leon"
+  }
+}
+
 resource "azurerm_app_service_plan" "service-plan" {
   name                = "holi-todo-service-plan"
   location            = var.location
@@ -108,7 +144,8 @@ resource "azurerm_function_app" "function-app" {
 
   app_settings = {
     holitodoappdb_DOCUMENTDB = azurerm_cosmosdb_account.db-account.connection_strings[0]
-    "STATIC_WEBSITE_URL" = azurerm_storage_account.storage-account.primary_web_host,
+    "STATIC_WEBSITE_URL" = azurerm_storage_account.storage-account.primary_web_host
+    "AzureSignalRConnectionString" = azurerm_signalr_service.signalr.primary_connection_string
   }
 
   tags = {
