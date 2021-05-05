@@ -6,7 +6,8 @@
       "direction": "in",
       "name": "req",
       "methods": [
-        "get"
+        "get",
+        "post"
       ]
     },
     {
@@ -17,7 +18,7 @@
     {
       "type": "signalRConnectionInfo",
       "name": "connectionInfo",
-      "hubName": "todo-app",
+      "hubName": "todoApp",
       "direction": "in"
     }
   ],

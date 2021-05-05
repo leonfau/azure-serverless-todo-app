@@ -32,6 +32,12 @@
       "collectionName": "todo-tasks",
       "createIfNotExists": "false",
       "connectionStringSetting": "holitodoappdb_DOCUMENTDB"
+    },
+    {
+      "type": "signalR",
+      "name": "signalRMessages",
+      "hubName": "todoApp",
+      "direction": "out"
     }
   ],
   "scriptFile": "../dist/completeTask/index.js"

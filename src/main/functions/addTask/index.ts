@@ -12,6 +12,14 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
             dueDate: req?.body?.dueDate,
         }
         context.bindings.newTask = JSON.stringify(task);
+
+      context.bindings.signalRMessages = [{
+        "target": "taskUpdate",
+        "arguments": [ {
+          action: "added"
+        } ]
+      }];
+
         context.res = {
             status: 201,
             headers: {
