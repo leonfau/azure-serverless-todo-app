@@ -8,23 +8,18 @@ import { ValidationError } from '../lib/validation';
 import { useBroadcastUpdate } from '../lib/useBroadcastUpdate';
 
 const Tasks: FunctionComponent = () => {
+    const [tasks, setTasks] = useState<Task[]>([])
+
     const updateTask = async () => {
       const tasks = await get('/tasks');
       setTasks(tasks)
     }
 
-    const [tasks, setTasks] = useState<Task[]>([])
-    const broadcastConnection = useBroadcastUpdate(updateTask);
+    useBroadcastUpdate(updateTask);
 
     useEffect(() => {
         (async () => {
             await updateTask()
-          if (broadcastConnection) {
-            console.log("subscribe to taskUpdate")
-            broadcastConnection.on('taskUpdate', message => {
-              console.log(message);
-            });
-          }
         })();
     }, []);
 
