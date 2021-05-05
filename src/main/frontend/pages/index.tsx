@@ -5,14 +5,26 @@ import TaskList from '../components/task-list/task-list';
 import { get, submit } from '../lib/http';
 import { NewTask, Task } from '../lib/task';
 import { ValidationError } from '../lib/validation';
+import { useBroadcastUpdate } from '../lib/useBroadcastUpdate';
 
 const Tasks: FunctionComponent = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const updateTask = async () => {
+      const tasks = await get('/tasks');
+      setTasks(tasks)
+    }
+
+    const [tasks, setTasks] = useState<Task[]>([])
+    const broadcastConnection = useBroadcastUpdate(updateTask);
 
     useEffect(() => {
         (async () => {
-            const tasks = await get('/tasks');
-            setTasks(tasks)
+            await updateTask()
+          if (broadcastConnection) {
+            console.log("subscribe to taskUpdate")
+            broadcastConnection.on('taskUpdate', message => {
+              console.log(message);
+            });
+          }
         })();
     }, []);
 
