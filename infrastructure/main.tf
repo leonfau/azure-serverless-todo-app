@@ -47,10 +47,13 @@ resource "azurerm_cosmosdb_sql_database" "db" {
 }
 
 resource "azurerm_cosmosdb_sql_container" "db-container" {
-  name                  = "todo-tasks"
-  resource_group_name   = azurerm_cosmosdb_account.db-account.resource_group_name
-  account_name          = azurerm_cosmosdb_account.db-account.name
-  database_name         = azurerm_cosmosdb_sql_database.db.name
+  name                = "todo-tasks"
+  resource_group_name = azurerm_cosmosdb_account.db-account.resource_group_name
+  account_name        = azurerm_cosmosdb_account.db-account.name
+  database_name       = azurerm_cosmosdb_sql_database.db.name
+
+  partition_key_path    = "/_partitionKey"
+  partition_key_version = 2
 }
 
 resource "azurerm_storage_account" "storage-account" {
@@ -63,7 +66,7 @@ resource "azurerm_storage_account" "storage-account" {
   min_tls_version          = "TLS1_2"
 
   static_website {
-    index_document = "index.html"
+    index_document     = "index.html"
     error_404_document = "404.html"
   }
 
@@ -73,27 +76,27 @@ resource "azurerm_storage_account" "storage-account" {
 }
 
 resource "azurerm_signalr_service" "signalr" {
-  name = "holi-todo"
-  location = var.location
+  name                = "holi-todo"
+  location            = var.location
   resource_group_name = azurerm_resource_group.rg.name
 
   sku {
-    name = "Free_F1"
+    name     = "Free_F1"
     capacity = 1
   }
 
   features {
-    flag = "ServiceMode"
+    flag  = "ServiceMode"
     value = "Serverless"
   }
 
   features {
-    flag = "EnableConnectivityLogs"
+    flag  = "EnableConnectivityLogs"
     value = "False"
   }
 
   features {
-    flag = "EnableMessagingLogs"
+    flag  = "EnableMessagingLogs"
     value = "False"
   }
 
@@ -143,9 +146,10 @@ resource "azurerm_function_app" "function-app" {
   }
 
   app_settings = {
-    holitodoappdb_DOCUMENTDB = azurerm_cosmosdb_account.db-account.connection_strings[0]
-    "STATIC_WEBSITE_URL" = azurerm_storage_account.storage-account.primary_web_host
+    holitodoappdb_DOCUMENTDB       = azurerm_cosmosdb_account.db-account.connection_strings[0]
+    "STATIC_WEBSITE_URL"           = azurerm_storage_account.storage-account.primary_web_host
     "AzureSignalRConnectionString" = azurerm_signalr_service.signalr.primary_connection_string
+    "FUNCTIONS_WORKER_RUNTIME"     = "node"
   }
 
   tags = {
