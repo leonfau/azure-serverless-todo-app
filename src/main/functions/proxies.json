@@ -1,5 +1,29 @@
 {
   "$schema": "http://json.schemastore.org/proxies",
   "proxies": {
+    "routes": {
+      "matchCondition": {
+        "methods": [ "GET", "HEAD" ],
+        "route": "/{*restOfPath}"
+      },
+      "backendUri": "https://%STATIC_WEBSITE_URL%/{restOfPath}"
+    },
+    "api": {
+      "matchCondition": {
+        "methods": [ "GET", "HEAD" ],
+        "route": "/api/{*restOfPath}"
+      },
+      "backendUri": "https://localhost/api/{restOfPath}"
+    },
+    "next_files": {
+      "matchCondition": {
+        "methods": [ "GET", "HEAD" ],
+        "route": "/_next/{*restOfPath}"
+      },
+      "backendUri": "https://%STATIC_WEBSITE_URL%/_next/{restOfPath}",
+      "responseOverrides": {
+        "response.headers.Cache-Control": "max-age=533280"
+      }
+    }
   }
 }
