@@ -9,6 +9,14 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     }
 
     context.bindings.completedTask = updatedTask
+
+    context.bindings.signalRMessages = [{
+      "target": "taskUpdate",
+      "arguments": [ {
+        action: "completed"
+      } ]
+    }];
+
     context.res = {
         status: 303,
         headers: {

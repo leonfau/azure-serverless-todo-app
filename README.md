@@ -6,6 +6,7 @@ The article is splitted into different parts:
 1. [Journey to a Serverless Application on Azure](https://leon-fausten.medium.com/journey-to-a-serverless-application-in-azure-254eaf5afc15)
 1. [Serverless Backend with Azure Functions and Cosmos DB](https://leon-fausten.medium.com/serverless-backend-with-azure-functions-and-cosmos-db-997a09df83d9)
 1. [Static Website Hosting with Function App Backend on Azure](https://leon-fausten.medium.com/static-website-hosting-with-function-app-backend-on-azure-577518394a7f)
+1. [Serverless Real-Time Application with Azure SignalR](https://leon-fausten.medium.com/serverless-real-time-application-with-azure-signalr-5300e46a8b4b)
 
 ## Infrastructure 
 Infrastructure is described via terraform scripts. 
