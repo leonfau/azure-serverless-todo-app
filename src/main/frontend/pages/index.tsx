@@ -4,23 +4,21 @@ import EmptyTaskList from '../components/task-list/empty-list-alert';
 import TaskList from '../components/task-list/task-list';
 import { get, submit } from '../lib/http';
 import { NewTask, Task } from '../lib/task';
-import { ValidationError } from '../lib/validation';
 import { useBroadcastUpdate } from '../lib/useBroadcastUpdate';
+import { ValidationError } from '../lib/validation';
 
 const Tasks: FunctionComponent = () => {
-    const [tasks, setTasks] = useState<Task[]>([])
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const updateTask = async () => {
-      const tasks = await get('/tasks');
-      setTasks(tasks)
-    }
+        const tasks = await get('/tasks');
+        setTasks(tasks)
+    };
 
     useBroadcastUpdate(updateTask);
 
     useEffect(() => {
-        (async () => {
-            await updateTask()
-        })();
+        updateTask();
     }, []);
 
     const handleAddTask = async (newTask: NewTask) => {
